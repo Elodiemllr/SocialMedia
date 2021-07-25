@@ -3,15 +3,17 @@ const mongoose = require("mongoose");
 
 //je le connect a mon compass 
 mongoose
-.connect('mongodb+srv://socialmedia:SocialMedia21@cluster0.rqtyg.mongodb.net/socialmedia',
+    .connect(
+        // Je protege mes données en renseignent mes informations présente dans .env et non directement le mdp et l'user
+        'mongodb+srv://' + process.env.DB_USER_PASS + '@cluster0.rqtyg.mongodb.net/socialmedia',
 //j'entre des informations de base 
-{
-    userNewUrlParser: true, 
-    useUnifiedTopology: true,
-    useCreateIndex: true, 
-    useFindAndModify: false
-}
-)
+        {
+            userNewUrlParser: true, 
+            useUnifiedTopology: true,
+            useCreateIndex: true, 
+            useFindAndModify: false
+        }
+    )
 // Puis si ça réussin alors j'affiche un message de succès dans ma console 
 .then (() => console.log('Connected to MongoDB'))
 //Si ça ne fonctionne pas, j'affiche l'erreur dans ma console 
