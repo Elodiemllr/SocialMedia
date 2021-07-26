@@ -1,5 +1,5 @@
 //fait référence à l'objet router d'express
-const router = require ('express').Router
+const router = require('express').Router();
 const authController = require('../controllers/auth.controller');
 
 
