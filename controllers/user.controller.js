@@ -37,9 +37,9 @@ module.exports.updateUser = async (req, res) => {
   // si on trouve l'id on trouve l'user et on  update 
   try {
     await UserModel.findOneAndUpdate(
-      //req.params.id = ce qu'on passe en params dans l'url 
+      //req.params.id = on passe l'id de l'user dans l'url 
       {_id: req.params.id},
-      { //la bio qu'on update et renvoie 
+      { //on envoie la bio (qui va se créer)
         $set : {
           bio: req.body.bio
         }
@@ -53,6 +53,22 @@ module.exports.updateUser = async (req, res) => {
         if (err) return res.status(500).send({message: err});
       }
     )
+  } catch (err) {
+    return res.status(500).json({message: err});
+  }
+};
+
+//supprimer un user 
+module.exports.deleteUser = async (req, res) => {
+   // si l'id n'est pas connu dans notre bdd alors on retourne une erreur 400
+   if (!ObjectID.isValid(req.params.id)) 
+   return res.status(400).send(`ID unknow :${req.params.id}`)
+ // si on trouve l'id on trouve l'user et le delete 
+  try {
+    await UserModel.remove(
+      {_id: req.params.id}).exec();
+      res.status(200).json({message: "Succesfully deleted."});
+
   } catch (err) {
     return res.status(500).json({message: err});
   }
