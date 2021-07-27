@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 mongoose
     .connect(
         // Je protege mes données en renseignent mes informations présente dans .env et non directement le mdp et l'user
-        'mongodb+srv://' + process.env.DB_USER_PASS + '@cluster0.rqtyg.mongodb.net/socialmedia',
+        'mongodb+srv://' + process.env.DB_USER_PASS + '@cluster0.inrvb.mongodb.net/test?authSource=admin&replicaSet=atlas-zogtx5-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true',
 //j'entre des informations de base 
         {
             userNewUrlParser: true, 
@@ -17,4 +17,4 @@ mongoose
 // Puis si ça réussin alors j'affiche un message de succès dans ma console 
 .then (() => console.log('Connected to MongoDB'))
 //Si ça ne fonctionne pas, j'affiche l'erreur dans ma console 
-.catch ((err) => console.log('Failde to connect to MongoDB', err));
+.catch ((err) => console.log('Failed to connect to MongoDB', err));

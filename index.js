@@ -8,7 +8,7 @@ require('./config/db');
 const app = express();
 
 
-//pour traiter la data qui va transiter et la  mettre au bon format
+//pour traiter la data de la requete qui va transiter et la  mettre au bon format (body-parser maintenant integrer à express)
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true

@@ -1,4 +1,4 @@
-//const UserModel = require ('../models/user.model');
+const UserModel = require ('../models/user.model');
 
 
 // fonction sign up/inscription , connexion deconnexion en async
@@ -8,8 +8,9 @@ module.exports.signUp = async (req, res) => {
     // req.body contient les informations (données) renseigné de mon user donc req.body.pseudo, req.body.email etc.
     console.log (req.body)
     // ce qu'on va demander lors de l'inscription 
-    const{pseudo, email, password} = req.body 
+    const {pseudo, email, password} = req.body 
 
+    // dans notre const user nous auront les informations que l'user a renseigné (pseudo:pseudo, email:email etc.)
     //la réponse à la création de l'utilisateur nous renvoie un status avec l'id. "Si la fonction à marché alors renvoie nous un status 201 avec l'id" 
     try { 
         const user = await UserModel.create({pseudo, email, password});
