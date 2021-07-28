@@ -62,7 +62,7 @@ module.exports.updateUser = async (req, res) => {
 module.exports.deleteUser = async (req, res) => {
    // si l'id n'est pas connu dans notre bdd alors on retourne une erreur 400
    if (!ObjectID.isValid(req.params.id)) 
-   return res.status(400).send(`ID unknow :${req.params.id}`)
+     return res.status(400).send(`ID unknow :${req.params.id}`)
  // si on trouve l'id on trouve l'user et le delete 
   try {
     await UserModel.remove(
@@ -73,3 +73,54 @@ module.exports.deleteUser = async (req, res) => {
     return res.status(500).json({message: err});
   }
 };
+
+//follow 
+module.exports.follow = async (req, res) => {
+  // si l'id n'est pas connu dans notre bdd alors on retourne une erreur 400
+  if (!ObjectID.isValid(req.params.id)) 
+  return res.status(400).send(`ID unknow :${req.params.id}`)
+
+  try {
+    // ajouter a la liste de follower 
+    await UserModel.findByIdAndUpdate(
+      //Ici c'est l'id de la personne concerné
+      req.params.id,
+      // addToSet = "rajoute à ce qu'on a déjà mit" 
+      // on récupère "following " de "req.params.id"
+      // On ajoute a ses following l'id de la personne qu'il suit
+      {$addToSet : { following: req.body.idToFollow}},
+      {new: true, upsert: true},
+      (err, docs) => {
+        // si il n'ya pas d'erreur alors on retourne l'info
+        if (!err) res.status(201).json(docs);
+        else return res.status(400).json(err);
+      }
+    );
+
+    //add to following list a "req.body.idToFollow"
+    await UserModel.findByIdAndUpdate (
+      req.body.idToFollow,
+      {$addToSet : { followers: req.params.id}},
+      {new: true, upsert: true},
+      (err, docs) => {
+        if (err) return res.status(400).json(err);
+      }
+    )
+  } catch (err) {
+    return res.status(500).json({message: err});
+  }
+},
+
+
+//unfollow
+module.exports.unfollow = async (req, res) => {
+  // si l'id n'est pas connu dans notre bdd alors on retourne une erreur 400
+  if (!ObjectID.isValid(req.params.id)) 
+  return res.status(400).send(`ID unknow :${req.params.id}`)
+
+  try {
+
+  } catch (err) {
+    return res.status(500).json({message: err});
+  }
+}
