@@ -6,7 +6,7 @@ const userRoutes = require('./routes/user.routes');
 require('dotenv').config({path: './config/.env'})
 //je previens mon server que j'ai un fichier DB 
 require('./config/db');
-const {checkUser} = require('./middleware/auth.middleware');
+const {checkUser, requireAuth} = require('./middleware/auth.middleware');
 const app = express();
 
 
@@ -21,9 +21,12 @@ app.use(cookieParser());
 app.use('/api/user', userRoutes)
 
 //jwt 
-// a chaque requete on verifie notre user 
+// a chaque requete on verifie notre user , on assure la securité 
 app.get('*', checkUser);
-
+// on utilise le middleware que lors de l'authentification
+app.get ('/jwtid', requireAuth, (req, res) => {
+  res.status(200).send(res.locals.user._id)
+})
 //server
 app.listen( process.env.PORT, () => { console.log(`Listening on port ${process.env.PORT}`);
 })
