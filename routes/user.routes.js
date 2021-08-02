@@ -7,6 +7,10 @@ const userController = require('../controllers/user.controller');
 // Sur route "api/user/register" , l'utilisateur pourra s'enregistrer
 // (on déclenche dans le dossier authController la fonction signUp)
 router.post('/register', authController.signUp);
+// se connecter
+router.post('/login' , authController.signIn);
+//se deconnecter (reprise du token)
+ router.get('/logout', authController.logout); 
 
 // User DB
 router.get('/', userController.getAllUsers);

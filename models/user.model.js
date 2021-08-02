@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema(
              type: [String]
          },
 
-         like: {
+         likes: {
              type: [String]
          }
     },
@@ -63,15 +63,30 @@ const userSchema = new mongoose.Schema(
 //on ne fait pas de fonction fleché pour ensuite pouvoir utiliser le "this"
 userSchema.pre("save", async function(next) {
     //bcrypt nous genère une série de caractère pour "salé" le mot de passe 
-    
     const salt = await bcrypt.genSalt();
     // on l'ajoute à notre mdp
     // on utilisé la méthode hash 
     this.password = await bcrypt.hash(this.password, salt);
-    
     next();
 });
 
+// lorsqu'on va essayer de se loguer, on recup l'email et le password
+userSchema.statics.login = async function (email, password) {
+    const user = await this.findOne({email});
+    if (user) {
+        //bcrypt  compare les deux cryptage  
+        const auth = await bcrypt.compare(password, user.password);
+        
+        if (auth) {
+            return user;
+            
+        } 
+        throw Error ('incorrect password');
+    }
+    throw Error ('incorrect email');
+};
+
 //
 const UserModel = mongoose.model('user', userSchema);
-module.exports = UserModel
+
+module.exports = UserModel;

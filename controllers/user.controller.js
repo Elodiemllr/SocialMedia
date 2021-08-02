@@ -1,6 +1,8 @@
+const UserModel = require('../models/user.model');
 // pour mon crud concernant l'user
 const ObjectID = require('mongoose').Types.ObjectId;
-const UserModel = require('../models/user.model');
+
+
 
 // recup tout les users avec la méthode get sur http://localhost:5000/api/user/
 module.exports.getAllUsers = async (req, res) => {
@@ -65,7 +67,7 @@ module.exports.deleteUser = async (req, res) => {
      return res.status(400).send(`ID unknow :${req.params.id}`)
  // si on trouve l'id on trouve l'user et le delete 
   try {
-    await UserModel.remove(
+    await UserModel.deleteOne(
       {_id: req.params.id}).exec();
       res.status(200).json({message: "Succesfully deleted."});
 
