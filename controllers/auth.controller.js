@@ -1,5 +1,6 @@
 const UserModel = require('../models/user.model');
 const jwt = require('jsonwebtoken');
+const { signUpErrors, signInErrors } = require('../utils/errors.utils');
 
  //24 * 60 * 60 * 1000 = 1 journée / 3 = 3 journée 
  const maxAge = 3 * 24 * 60 * 60 * 1000;
@@ -31,7 +32,7 @@ module.exports.signUp = async (req, res) => {
     //si on a un soucis on r'envoie l'erreur dans la console 
     catch(err) {
         const errors = signUpErrors(err);
-        res.status(200).send({ err })
+        res.status(200).send({ errors })
       }
     }
 
@@ -48,14 +49,14 @@ module.exports.signIn = async (req, res) => {
         //on envoie un status 200 voir si tout est ok 
         res.status(200).json({ user: user._id})
     } catch (err){
-        //const errors = signInErrors(err);
-        res.status(200).json({ err });
+      const errors = signInErrors(err);
+      res.status(200).json({ errors });
       }
     }
 
-module.exports.logout = (req, res) => {
-  //on lui "retire" le cookie 'jwt'. 
-  res.cookie('jwt', '', { maxAge: 1 });
-  //on le redirige lorsqu'il se deconnecte 
-  res.redirect('/');
-}
+    module.exports.logout = (req, res) => {
+      //on lui "retire" le cookie 'jwt'. 
+      res.cookie('jwt', '', { maxAge: 1 });
+      //on le redirige lorsqu'il se deconnecte 
+      res.redirect('/');
+    }

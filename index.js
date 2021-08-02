@@ -26,7 +26,7 @@ app.get('*', checkUser);
 // on utilise le middleware que lors de l'authentification
 app.get ('/jwtid', requireAuth, (req, res) => {
   res.status(200).send(res.locals.user._id)
-})
+});
 //server
 app.listen( process.env.PORT, () => { console.log(`Listening on port ${process.env.PORT}`);
 })

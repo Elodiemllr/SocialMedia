@@ -16,7 +16,7 @@ module.exports.checkUser = (req, res, next) => {
                 res.locals.user = null;
                 res.cookie('jwt', '', {maxAge: 1});
             } else {
-                let user = await UserModel.findById(decodedToken.id);
+                let user = await UserModel.findById(decodedToken);
                 res.locals.user = user;
                 console.log(res.locals.user);
                 next();
@@ -42,6 +42,6 @@ module.exports.requireAuth = (req, res, next) => {
             }
         });
     } else {
-        console.log('Don\'t have a token')
+        console.log('Don\'t have a token');
     }
 }
