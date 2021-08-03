@@ -1,6 +1,10 @@
 const PostModel = require("../models/post.model");
 const UserModel = require("../models/user.model");
 const ObjectID = require("mongoose").Types.ObjectId;
+const { uploadErrors } = require("../utils/errors.utils");
+const fileSystem = require("fs");
+const { promisify } = require("util");
+const pipeline = promisify(require("stream").pipeline);
 
 module.exports.readPost = (req, res) => {
     PostModel.find((err, docs) => {
@@ -11,9 +15,40 @@ module.exports.readPost = (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
+    //on traite le file
+    let fileName;
+    //ici on traite "si" une image est envoyé (car un post peut contenir seulement du texte aussi)
+    if (req.file !== null) {
+        try {
+            if (
+                req.file.detectedMimeType != "image/jpg" &&
+                req.file.detectedMimeType != "image/png" &&
+                req.file.detectedMimeType != "image/jpeg"
+            )
+                throw Error("invalid file");
+            //le throw arrête le try pour directement passer au catch
+            //ici on exige une taille en dessous de 500ko
+            if (req.file.size > 500000) throw Error("max size");
+        } catch (err) {
+            const errors = uploadErrors(err);
+            return res.status(201).json(errors);
+        }
+        // ici le fileName l'id de l'user +6 le moment pile ou il l'envoie (du coup nom unique)
+        fileName = req.body.posterId + Date.now() + ".jpg";
+        //cette function permet de creer via file stysteme le fichier
+        await pipeline(
+            req.file.stream,
+            fileSystem.createWriteStream(
+                //ici le chemin ou on stock
+                `${__dirname}/../client/public/uploads/posts/${fileName}`
+            )
+        );
+    }
     const newPost = new PostModel({
         posterId: req.body.posterId,
         message: req.body.message,
+        // si req.file n'est pas null alors on le passe sinon on met rien
+        picture: req.file !== null ? "./uploads/posts/" + fileName : "",
         video: req.body.video,
         likers: [],
         comments: [],
