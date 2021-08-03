@@ -8,14 +8,27 @@ require("dotenv").config({ path: "./config/.env" });
 //je previens mon server que j'ai un fichier DB
 require("./config/db");
 const { checkUser, requireAuth } = require("./middleware/auth.middleware");
+const cors = require("cors");
 const app = express();
+
+//ici on précise tout ce qu'on autorise
+const corsOptions = {
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+    allowedHeaders: ["sessionId", "Content-Type"],
+    exposedHeaders: ["sessionId"],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+};
+
+app.use(cors(corsOptions));
 
 //pour traiter la data de la requete qui va transiter et la  mettre au bon format (body-parser maintenant integrer à express)
 app.use(express.json());
 app.use(
-  express.urlencoded({
-    extended: true,
-  })
+    express.urlencoded({
+        extended: true,
+    })
 );
 app.use(cookieParser());
 
@@ -29,10 +42,10 @@ app.use("/api/post", postRoutes);
 app.get("*", checkUser);
 // on utilise le middleware que lors de l'authentification
 app.get("/jwtid", requireAuth, (req, res) => {
-  res.status(200).send(res.locals.user._id);
+    res.status(200).send(res.locals.user._id);
 });
 
 //server
 app.listen(process.env.PORT, () => {
-  console.log(`Listening on port ${process.env.PORT}`);
+    console.log(`Listening on port ${process.env.PORT}`);
 });
