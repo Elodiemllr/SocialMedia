@@ -208,4 +208,28 @@ module.exports.editComment = (req, res) => {
 module.exports.deleteComment = (req, res) => {
     //verificationd e l'if
     // si il est pas ok je fais un return
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID unknown : " + req.params.id);
+
+    try {
+        // on update et on delete pas pour ne pas supprimer le post entier mais seulement le commentaire
+        return PostModel.findByIdAndUpdate(
+            // on pointe le commentaire et on le pull
+            req.params.id,
+            {
+                $pull: {
+                    comments: {
+                        _id: req.body.commentId,
+                    },
+                },
+            },
+            { new: true },
+            (err, docs) => {
+                if (!err) return res.send(docs);
+                else return res.status(400).send(err);
+            }
+        );
+    } catch (err) {
+        return res.status(400).send(err);
+    }
 };
