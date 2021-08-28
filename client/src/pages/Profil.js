@@ -1,18 +1,7 @@
 import React from "react";
-import Log from "../components/log";
 
-//ici je renvoie tout ce qu'il concerne le profil alors que dans components je fais des comp individuel
 const Profil = () => {
-    return (
-        <div className="profil-page">
-            <div className="log-container">
-                <Log signin={false} signup={true} />
-            </div>
-            <div className="img-container">
-                <img src="./img/log.svg" alt="img" />
-            </div>
-        </div>
-    );
+    return <div>Profil</div>;
 };
 
 export default Profil;

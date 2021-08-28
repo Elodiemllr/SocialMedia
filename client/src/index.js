@@ -4,7 +4,6 @@ import App from "../src/App";
 import "./styles/index.scss";
 //import reportWebVitals from "./reportWebVitals";
 
-//ici je "render" mon element react dans le dom.
 ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want to start measuring performance in your app, pass a function
