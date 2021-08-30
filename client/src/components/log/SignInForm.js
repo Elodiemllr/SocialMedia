@@ -29,6 +29,7 @@ const SignInForm = () => {
         })
             //ensuite si la réponse envoie une errors
             .then((res) => {
+                console.log(res);
                 if (res.data.errors) {
                     emailErrors.innerHTML = res.data.errors.email;
                     passErrors.innerHTML = res.data.errors.password;
