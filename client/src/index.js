@@ -1,19 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import App from "../src/App";
-import "./styles/index.scss";
+import { applyMiddleware, createStore } from "redux";
 //import reportWebVitals from "./reportWebVitals";
+//ATTENTION ENLEVER LORS DE LA MISE EN PRODUCTION (thunk et logger aussi)
+import { composeWithDevTools } from "redux-devtools-extension";
+import logger from "redux-logger";
+import thunk from "redux-thunk";
+import App from "../src/App";
+import rootReducer from "./reducer/index.js";
+import "./styles/index.scss";
 
 const store = createStore(
-    rootReducer
-    //nous permet d'acceder a tout ce qu'il y'a dans le store
+    //composeWithDevTools nous permet d'acceder a tout ce qu'il y'a dans le store
+    //thunk nous permet de faire des req async avec redux
+    rootReducer,
+    composeWithDevTools(applyMiddleware(thunk, logger))
 );
 ReactDOM.render(
     <Provider store={store}>
-        {" "}
-        <App />{" "}
+        <App />
     </Provider>,
     document.getElementById("root")
 );
