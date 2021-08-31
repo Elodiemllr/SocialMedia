@@ -8,11 +8,13 @@ import {
 import Home from "../../pages/Home";
 import Profil from "../../pages/Profil";
 import Trending from "../../pages/Trending";
+import Navbar from "../Navbar.js";
 
 // ici je r'envoie mes routes suivant le chemin choisit
 const index = () => {
     return (
         <Router>
+            <Navbar />
             <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/profil" exact component={Profil} />
