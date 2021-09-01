@@ -1,11 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import Routes from "../src/components/Routes";
+import { getUser } from "./actions/user.actions.js";
 import { UidContext } from "./components/AppContext.js";
 
-// On veut stocker l'id de notre utilisateur
+//on veut verifier si notre user est connecté grace au token à l'initialisation de notre app
 const App = () => {
     const [uid, setUid] = useState(null);
+    //dispatch nous permet de declencher une action
+    const dispatch = useDispatch();
     //dès qu'on appelle APP (des qu'on arrive sur notre application) on lance ce useEffect
     // on get requireAuth qui nous permet de verifier lors de la premier id le token de notre user
     useEffect(() => {
@@ -23,7 +27,10 @@ const App = () => {
         };
         fetchToken();
         //a chaque fois que uid evolue, on relance le useEffect
-    }, [uid]);
+
+        //si l'id existe alors on va dispatch getUser (on declenche l'action) afin de recup les infos
+        if (uid) dispatch(getUser(uid));
+    }, [uid, dispatch]);
     return (
         // des qu'on appellera UidContext, on aura l'id de notre utilisateur
         <UidContext.Provider value={uid}>

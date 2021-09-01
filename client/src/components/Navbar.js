@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { UidContext } from "./AppContext";
 import Logout from "./log/logout.js";
@@ -8,6 +9,8 @@ const Navbar = () => {
     //on se récupère ce qu'il y'a au plus haut de notre application
     // pour que si il existe on aura un affichage et si non un autre
     const uid = useContext(UidContext);
+    //useSelector = selectionner data de l'utilisateur
+    const userData = useSelector((state) => state.userReducer);
 
     //on utilise Redux pourlaisser le nom de notre user dans la barre de nav
     //redux a trois element fondamentaux. ça permet que tout les élements interagissent entre eux (comme voir aparraitre un like)
@@ -29,7 +32,7 @@ const Navbar = () => {
                         <div>
                             <li className="welcome">
                                 <NavLink exact to="/profil">
-                                    <h5> Bienvenue </h5>
+                                    <h5> Bienvenue {userData.pseudo}</h5>
                                 </NavLink>
                             </li>
                             <Logout />

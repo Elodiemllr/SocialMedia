@@ -5,7 +5,9 @@ import { applyMiddleware, createStore } from "redux";
 //import reportWebVitals from "./reportWebVitals";
 //ATTENTION ENLEVER LORS DE LA MISE EN PRODUCTION (thunk et logger aussi)
 import { composeWithDevTools } from "redux-devtools-extension";
+//ATTENTION ENLEVER LORS DE LA MISE EN PRODUCTION (thunk et logger aussi)
 import logger from "redux-logger";
+//ATTENTION ENLEVER LORS DE LA MISE EN PRODUCTION (thunk et logger aussi)
 import thunk from "redux-thunk";
 import App from "../src/App";
 import rootReducer from "./reducer/index.js";
