@@ -4,6 +4,7 @@ import axios from "axios";
 //je créer une action et sa fonction qui est de recup les infos de mon utilisateur
 export const GET_USER = "GET_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
+export const UPDATE_BIO = "update_bio";
 
 export const getUser = (uid) => {
     //dispatch = ce qu'on envoie au reducer pour lui dire quoi mettre dans le store
@@ -43,5 +44,20 @@ export const uploadPicture = (data, id) => {
                 })
                 .catch((err) => console.log(err))
         );
+    };
+};
+
+//id pour l'identifier, bio..pour la bio
+export const updateBio = (userId, bio) => {
+    return (dispatch) => {
+        return axios
+            .put(`${process.env.REACT_APP_API_URL}api/user/${userId}`, bio)
+            .then((res) => {
+                dispatch({
+                    type: UPDATE_BIO,
+                    payload: bio,
+                });
+            })
+            .catch((err) => console.log(err));
     };
 };
