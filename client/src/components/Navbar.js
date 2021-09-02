@@ -29,27 +29,20 @@ const Navbar = () => {
                 {/*Si on a notre uid on r'envoie vers profil et on met une certaines classavec le logo pour se deconnecter */}
                 {uid ? (
                     <ul>
-                        <div>
-                            <li className="welcome">
-                                <NavLink exact to="/profil">
-                                    <h5> Bienvenue {userData.pseudo}</h5>
-                                </NavLink>
-                            </li>
-                            <Logout />
-                        </div>
+                        <li className="welcome">
+                            <NavLink exact to="/profil">
+                                <h5> Bienvenue {userData.pseudo}</h5>
+                            </NavLink>
+                        </li>
+                        <Logout />
                     </ul>
                 ) : (
                     //Si on a pas notre uid alors on r'envoie vers le profil mais avec l'inscription avec le logo pour entrer
                     <ul>
                         <li>
-                            <div>
-                                <NavLink exact to="/profil">
-                                    <img
-                                        src="./img/icons/login.svg"
-                                        alt="login"
-                                    />
-                                </NavLink>
-                            </div>
+                            <NavLink exact to="/profil">
+                                <img src="./img/icons/login.svg" alt="login" />
+                            </NavLink>
                         </li>
                     </ul>
                 )}
