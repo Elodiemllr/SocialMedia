@@ -11,6 +11,8 @@ const UpdateProfil = () => {
     const [updateForm, setUpdateForm] = useState(false);
     const [bio, setBio] = useState("");
     const userData = useSelector((state) => state.userReducer);
+    const usersData = useSelector((state) => state.usersReducer);
+
     const dispatch = useDispatch();
     const [followingPopUp, setFollowingPopup] = useState(false);
     const [followersPopup, setFollowersPopup] = useState(false);
@@ -102,6 +104,30 @@ const UpdateProfil = () => {
                         >
                             &#10005;
                         </span>
+                        <ul>
+                            {usersData.map((user) => {
+                                //on boucle pour afficher tout les following présent chez notre user
+                                for (
+                                    let i = 0;
+                                    i < userData.following.length;
+                                    i++
+                                ) {
+                                    if (user._id === userData.following[i]) {
+                                        //puis on veut retourner sa photo, son nom d'user  et son nombre de follower
+                                        return (
+                                            <li key={user._id}>
+                                                <img
+                                                    src={user.picture}
+                                                    alt="user-pic"
+                                                />
+                                                <h4> {user.pseudo} </h4>
+                                                <h1>FOLLOWERS</h1>
+                                            </li>
+                                        );
+                                    }
+                                }
+                            })}
+                        </ul>
                     </div>
                 </div>
             )}
