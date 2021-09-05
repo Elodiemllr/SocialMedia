@@ -88,6 +88,20 @@ const UpdateProfil = () => {
                         >
                             &#10005;
                         </span>
+                        {/*on veut afficher les abonnés  */}
+                    </div>
+                </div>
+            )}
+            {followingPopUp && (
+                <div className="popup-profil-container">
+                    <div className="modal">
+                        <h3>Abonnements</h3>
+                        <span
+                            className="cross"
+                            onClick={() => setFollowingPopup(false)}
+                        >
+                            &#10005;
+                        </span>
                     </div>
                 </div>
             )}
