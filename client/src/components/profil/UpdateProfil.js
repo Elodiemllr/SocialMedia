@@ -131,6 +131,43 @@ const UpdateProfil = () => {
                     </div>
                 </div>
             )}
+            {followersPopup && (
+                <div className="popup-profil-container">
+                    <div className="modal">
+                        <h3>Abonnées</h3>
+                        <span
+                            className="cross"
+                            onClick={() => setFollowersPopup(false)}
+                        >
+                            &#10005;
+                        </span>
+                        <ul>
+                            {usersData.map((user) => {
+                                //on boucle pour afficher tout les following présent chez notre user
+                                for (
+                                    let i = 0;
+                                    i < userData.followers.length;
+                                    i++
+                                ) {
+                                    if (user._id === userData.followers[i]) {
+                                        //puis on veut retourner sa photo, son nom d'user  et son nombre de follower
+                                        return (
+                                            <li key={user._id}>
+                                                <img
+                                                    src={user.picture}
+                                                    alt="user-pic"
+                                                />
+                                                <h4> {user.pseudo} </h4>
+                                                <h1>FOLLOWERS</h1>
+                                            </li>
+                                        );
+                                    }
+                                }
+                            })}
+                        </ul>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
