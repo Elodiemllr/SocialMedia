@@ -39,8 +39,27 @@ const Card = ({ post }) => {
                                     })
                                     .join("")
                             }
-                            alt="poster-pic"
+                            alt="user-pic"
                         />
+                    </div>
+                    {/*on veut maintenant le nom de l'user */}
+                    <div className="card-right">
+                        <div className="card-header">
+                            <div className="pseudo">
+                                {/*on remap comme au dessus mais cette fois pour le pseudo*/}
+                                <h3>
+                                    {" "}
+                                    {!isEmpty(usersData[0]) &&
+                                        usersData
+                                            .map((user) => {
+                                                if (user._id === post.posterId)
+                                                    return user.pseudo;
+                                                else return null;
+                                            })
+                                            .join("")}
+                                </h3>
+                            </div>
+                        </div>
                     </div>
                 </>
             )}
