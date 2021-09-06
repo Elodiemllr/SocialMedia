@@ -29,6 +29,7 @@
         "multer": "^2.0.0-rc.1",
         "nodemon": "^2.0.12",
         "react-router-dom": "^5.2.0",
+        "reactjs-popup": "^2.0.5",
         "validator": "^13.6.0",
         "validatore": "^1.0.1"
     },

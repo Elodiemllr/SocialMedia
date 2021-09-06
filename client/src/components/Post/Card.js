@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import dateParser, { isEmpty } from "../Utils.js";
-import FollowHandler from "./profil/FollowHandler.js";
+import dateParser, { isEmpty } from "../../Utils.js";
+import FollowHandler from "../profil/FollowHandler.js";
+import LikeButton from "./LikeButton.js";
 //comp individuel pour un post (mit dans le thread)
 
 //on se recupère les données dans "posts"
@@ -99,12 +100,8 @@ const Card = ({ post }) => {
                                 <span> {post.comments.length}</span>
                             </div>
                             {/*icon de like*/}
-                            <h6> Like button </h6>
-                            {/*icon de partage */}
-                            <img
-                                src="./img/icons/share.svg"
-                                alt="share-icons"
-                            />
+                            <LikeButton post={post} />
+                            <img src="./img/icons/share.svg" alt="share" />
                         </div>
                     </div>
                 </>

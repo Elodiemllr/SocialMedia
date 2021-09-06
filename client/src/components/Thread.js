@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../actions/post.actions";
 import { isEmpty } from "../Utils.js";
-import Card from "./Card.js";
+import Card from "./Post/Card.js";
 
 //POUR AFFICHER TOUT LES POSTS
 const Thread = () => {
