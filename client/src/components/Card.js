@@ -30,15 +30,16 @@ const Card = ({ post }) => {
                         {/* on map pour retrouver la photo de l'utilisateur et si on la trouve on return sa photo  */}
                         <img
                             src={
-                                !isEmpty(
-                                    usersData[0] &&
-                                        usersData.map((user) => {
-                                            if (user.id === post.posterid)
-                                                return user.picture;
-                                        })
-                                )
+                                !isEmpty(usersData[0]) &&
+                                usersData
+                                    .map((user) => {
+                                        if (user._id === post.posterId)
+                                            return user.picture;
+                                        else return null;
+                                    })
+                                    .join("")
                             }
-                            alt=""
+                            alt="poster-pic"
                         />
                     </div>
                 </>
