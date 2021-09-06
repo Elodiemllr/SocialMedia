@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../actions/post.actions";
 import { isEmpty } from "../Utils.js";
+import Card from "./Card.js";
 
 //POUR AFFICHER TOUT LES POSTS
 const Thread = () => {
@@ -27,7 +28,7 @@ const Thread = () => {
                 {!isEmpty(posts[0]) &&
                     // on map pour afficher tout nos posts
                     posts.map((post) => {
-                        return <li> {post._id}</li>;
+                        return <Card post={post} key={post._id}></Card>;
                     })}
             </ul>
         </div>
