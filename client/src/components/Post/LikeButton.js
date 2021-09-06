@@ -53,6 +53,8 @@ const LikeButton = ({ post }) => {
                     alt="unlike"
                 />
             )}
+            {/*pour longueur du tab des likers */}
+            <span>{post.likers.length}</span>
         </div>
     );
 };
