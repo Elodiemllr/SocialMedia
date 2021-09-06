@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { followUser, unfollowUser } from "../../actions/user.actions.js";
 import { isEmpty } from "../../Utils.js";
 
-const FollowHandle = ({ idToFollow }) => {
+const FollowHandler = ({ idToFollow }) => {
     //on recup les données qui sont deja stockés dans notre store
     const userData = useSelector((state) => state.userReducer);
     //pour changer l'état visu et passer de follow a unfollow
     const [isFollowed, setIsFollowed] = useState(false);
+    const dispatch = useDispatch();
 
     //fonction handle follow pour suivre
-    const handleFollow = () => {};
+    const handleFollow = () => {
+        dispatch(followUser(userData._id, idToFollow));
+        setIsFollowed(true);
+    };
 
     //fonction handle follow pour plus suivre
-    const handleUnollow = () => {};
+    const handleUnfollow = () => {
+        dispatch(unfollowUser(userData._id, idToFollow));
+        setIsFollowed(false);
+    };
 
     //Pour effectuer 'l'effet' une fois le rendu du comp terminé
     //Là, si notre userData.following n'est pas vite, alors on lancera la function
@@ -29,13 +37,16 @@ const FollowHandle = ({ idToFollow }) => {
     return (
         <>
             {/*Si la personne est isFollowed alors on met le bouton "abonnée" */}
-            {isFollowed && (
-                <span>
+            {isFollowed && !isEmpty(userData) && (
+                // au click on lance la function pour se désabonner
+                <span onClick={handleUnfollow}>
                     <button className="unfollow-btn"> Abonné</button>
                 </span>
             )}
-            {isFollowed === false && (
-                <span>
+            {isFollowed === false && !isEmpty(userData) && (
+                // au click on lance la function pour s'abonner
+
+                <span onClick={handleFollow}>
                     <button className="follow-btn"> suivre</button>
                 </span>
             )}
@@ -43,4 +54,4 @@ const FollowHandle = ({ idToFollow }) => {
     );
 };
 
-export default FollowHandle;
+export default FollowHandler;

@@ -1,5 +1,7 @@
 import {
+    FOLLOW_USER,
     GET_USER,
+    UNFOLLOW_USER,
     UPDATE_BIO,
     UPLOAD_PICTURE,
 } from "../actions/user.actions.js";
@@ -27,6 +29,20 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 bio: action.payload,
+            };
+        case FOLLOW_USER:
+            return {
+                ...state,
+                //on rajoute le followers squivis
+                following: [action.payload.idToFollow, ...state.following],
+            };
+        case UNFOLLOW_USER:
+            return {
+                ...state,
+                //on retire le followers plus suivis
+                following: state.following.filter(
+                    (id) => id !== action.payload.idToUnfollow
+                ),
             };
         default:
             return state;

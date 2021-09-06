@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateBio } from "../../actions/user.actions.js";
 import dateParser from "../../Utils.js";
 import LeftNavBar from "../Routes/LetNavBar.js";
-import FollowHandle from "./FollowHandle.js";
+import FollowHandler from "./FollowHandler.js";
 import UploadImg from "./UploadImg.js";
 
 const UpdateProfil = () => {
@@ -123,11 +123,9 @@ const UpdateProfil = () => {
                                                 />
                                                 <h4> {user.pseudo} </h4>
                                                 <div className="follow-handler">
-                                                    <FollowHandle
+                                                    <FollowHandler
                                                         idToFollow={user._id}
-                                                    >
-                                                        FOLLOWERS
-                                                    </FollowHandle>
+                                                    ></FollowHandler>
                                                 </div>
                                             </li>
                                         );
@@ -166,9 +164,9 @@ const UpdateProfil = () => {
                                                 />
                                                 <h4> {user.pseudo} </h4>
                                                 <div className="follow-handler">
-                                                    <FollowHandle>
-                                                        FOLLOWERS
-                                                    </FollowHandle>
+                                                    <FollowHandler
+                                                        idToFollow={user._id}
+                                                    ></FollowHandler>
                                                 </div>
                                             </li>
                                         );

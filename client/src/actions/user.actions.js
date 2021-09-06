@@ -5,6 +5,8 @@ import axios from "axios";
 export const GET_USER = "GET_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const UPDATE_BIO = "update_bio";
+export const FOLLOW_USER = "follow_user";
+export const UNFOLLOW_USER = "unfollow_user";
 
 export const getUser = (uid) => {
     //dispatch = ce qu'on envoie au reducer pour lui dire quoi mettre dans le store
@@ -59,5 +61,51 @@ export const updateBio = (userId, bio) => {
                 });
             })
             .catch((err) => console.log(err));
+    };
+};
+
+//on reprends le sinfos du back en params (on a besoin de l'id de la personne a suivre, et celle qui est concerné )
+export const followUser = (followerId, idToFollow) => {
+    //dispatch = ce qu'on envoie au reducer pour lui dire quoi mettre dans le store
+    return (dispatch) => {
+        //on envoie la data à notre bdd
+        return (
+            axios({
+                method: "patch",
+                url:
+                    `${process.env.REACT_APP_API_URL}api/user/follow/` +
+                    followerId,
+                data: { idToFollow },
+            })
+                //on avertie notre reducer pour qu'il change le store avec nos nouvelles données
+                .then((res) => {
+                    dispatch({ type: FOLLOW_USER, payload: { idToFollow } });
+                })
+                .catch((err) => console.log(err))
+        );
+    };
+};
+
+export const unfollowUser = (followerId, idToUnfollow) => {
+    //dispatch = ce qu'on envoie au reducer pour lui dire quoi mettre dans le store
+    return (dispatch) => {
+        //on envoie la data à notre bdd
+        return (
+            axios({
+                method: "patch",
+                url:
+                    `${process.env.REACT_APP_API_URL}api/user/unfollow/` +
+                    followerId,
+                data: { idToUnfollow },
+            })
+                //on avertie notre reducer pour qu'il change le store avec nos nouvelles données
+                .then((res) => {
+                    dispatch({
+                        type: UNFOLLOW_USER,
+                        payload: { idToUnfollow },
+                    });
+                })
+                .catch((err) => console.log(err))
+        );
     };
 };
