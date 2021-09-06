@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { isEmpty } from "../Utils.js";
+import dateParser, { isEmpty } from "../Utils.js";
 //comp individuel pour un post (mit dans le thread)
 
 //on se recupère les données dans "posts"
@@ -59,6 +59,8 @@ const Card = ({ post }) => {
                                             .join("")}
                                 </h3>
                             </div>
+                            {/*On veut affcher la date */}
+                            <span>{dateParser(post.createdAt)}</span>
                         </div>
                     </div>
                 </>
