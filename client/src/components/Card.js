@@ -17,14 +17,31 @@ const Card = ({ post }) => {
     useEffect(() => {
         !isEmpty(usersData[0]) && setIsLoading(false);
     }, [usersData]);
+
     return (
         <li className="card-container" key={post._id}>
             {/*si "isLoading" est sur true, alors on met la classe fas fa-spinner */}
             {isLoading ? (
                 <i className="fas fa-spinner fa-spin"></i>
             ) : (
-                //sinon on met ça
-                <h2> test</h2>
+                //sinon on r'envoie notre visu de card
+                <>
+                    <div className="card-left">
+                        {/* on map pour retrouver la photo de l'utilisateur et si on la trouve on return sa photo  */}
+                        <img
+                            src={
+                                !isEmpty(
+                                    usersData[0] &&
+                                        usersData.map((user) => {
+                                            if (user.id === post.posterid)
+                                                return user.picture;
+                                        })
+                                )
+                            }
+                            alt=""
+                        />
+                    </div>
+                </>
             )}
         </li>
     );
