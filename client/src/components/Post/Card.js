@@ -89,6 +89,23 @@ const Card = ({ post }) => {
                                 title={post._id}
                             ></iframe>
                         )}
+                        <div className="card-footer">
+                            {/* icon de commentaire avec le nombre */}
+                            <div className="comment-icon">
+                                <img
+                                    src="./img/icons/message1.svg"
+                                    alt="comment"
+                                />
+                                <span> {post.comments.length}</span>
+                            </div>
+                            {/*icon de like*/}
+                            <h6> Like button </h6>
+                            {/*icon de partage */}
+                            <img
+                                src="./img/icons/share.svg"
+                                alt="share-icons"
+                            />
+                        </div>
                     </div>
                 </>
             )}
