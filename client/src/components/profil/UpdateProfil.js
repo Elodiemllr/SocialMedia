@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateBio } from "../../actions/user.actions.js";
 import dateParser from "../../Utils.js";
-import LeftNavBar from "../Routes/LetNavBar.js";
+import LeftNavBar from "../LetNavBar.js";
 import FollowHandler from "./FollowHandler.js";
 import UploadImg from "./UploadImg.js";
 
