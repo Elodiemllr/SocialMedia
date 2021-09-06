@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import dateParser, { isEmpty } from "../Utils.js";
+import FollowHandler from "./profil/FollowHandler.js";
 //comp individuel pour un post (mit dans le thread)
 
 //on se recupère les données dans "posts"
@@ -48,7 +49,6 @@ const Card = ({ post }) => {
                             <div className="pseudo">
                                 {/*on remap comme au dessus mais cette fois pour le pseudo*/}
                                 <h3>
-                                    {" "}
                                     {!isEmpty(usersData[0]) &&
                                         usersData
                                             .map((user) => {
@@ -58,10 +58,37 @@ const Card = ({ post }) => {
                                             })
                                             .join("")}
                                 </h3>
+                                {post.posterId !== userData._id && (
+                                    <FollowHandler
+                                        idToFollow={post.posterId}
+                                        type={"card"}
+                                    />
+                                )}
                             </div>
                             {/*On veut affcher la date */}
                             <span>{dateParser(post.createdAt)}</span>
                         </div>
+                        {/*Puis on affiche le message et une photo si il y'en a une  */}
+                        <p>{post.message}</p>
+                        {post.picture && (
+                            <img
+                                src={post.picture}
+                                alt="card-pic"
+                                className="card-pic"
+                            />
+                        )}
+                        {/*idem pour les vidéos  */}
+                        {post.video && (
+                            <iframe
+                                width="500"
+                                height="300"
+                                src={post.video}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title={post._id}
+                            ></iframe>
+                        )}
                     </div>
                 </>
             )}

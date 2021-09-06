@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { followUser, unfollowUser } from "../../actions/user.actions.js";
 import { isEmpty } from "../../Utils.js";
 
-const FollowHandler = ({ idToFollow }) => {
+const FollowHandler = ({ idToFollow, type }) => {
     //on recup les données qui sont deja stockés dans notre store
     const userData = useSelector((state) => state.userReducer);
     //pour changer l'état visu et passer de follow a unfollow
@@ -40,14 +40,26 @@ const FollowHandler = ({ idToFollow }) => {
             {isFollowed && !isEmpty(userData) && (
                 // au click on lance la function pour se désabonner
                 <span onClick={handleUnfollow}>
-                    <button className="unfollow-btn"> Abonné</button>
+                    {" "}
+                    {/*l'icon change suivant le type d'affichage, le type sera mentionné dans la balise 'followhandler' dans notre updateProfil par exemple*/}
+                    {type === "suggestion" && (
+                        <button className="unfollow-btn">Abonné</button>
+                    )}
+                    {type === "card" && (
+                        <img src="./img/icons/checked.svg" alt="checked" />
+                    )}
                 </span>
             )}
             {isFollowed === false && !isEmpty(userData) && (
                 // au click on lance la function pour s'abonner
 
                 <span onClick={handleFollow}>
-                    <button className="follow-btn"> suivre</button>
+                    {type === "suggestion" && (
+                        <button className="follow-btn">Suivre</button>
+                    )}
+                    {type === "card" && (
+                        <img src="./img/icons/check.svg" alt="check" />
+                    )}
                 </span>
             )}
         </>
