@@ -5,12 +5,14 @@ export const GET_POSTS = "GET_POSTS";
 export const LIKE_POST = "LIKE_POST";
 export const UNLIKE_POST = "UNLIKE_POST";
 
-export const getPosts = () => {
+//on passe num en paramètres, pour dans notre const array lui dire d'aller jusqu'au "num" (soit 5) avec la méthode slice
+export const getPosts = (num) => {
     return (dispatch) => {
         return axios
             .get(`${process.env.REACT_APP_API_URL}api/post/`)
             .then((res) => {
-                dispatch({ type: GET_POSTS, payload: res.data });
+                const array = res.data.slice(0, num);
+                dispatch({ type: GET_POSTS, payload: array });
             })
             .catch((err) => console.log(err));
     };
