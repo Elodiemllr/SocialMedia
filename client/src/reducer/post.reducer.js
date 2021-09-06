@@ -1,4 +1,4 @@
-import { GET_POSTS, LIKE_POST } from "../actions/post.actions.js";
+import { GET_POSTS, LIKE_POST, UNLIKE_POST } from "../actions/post.actions.js";
 
 const initialState = {};
 
@@ -13,6 +13,22 @@ export default function postReducer(state = initialState, action) {
                         ...post,
                         //on ajoute le nouveau like sans enlever les anciens
                         likers: [action.payload.userId, ...post.likers],
+                    };
+                } //si on rempli pas les conditions, on return juste le post
+                return post;
+            });
+
+        case UNLIKE_POST:
+            //on map sur tout les post pour trouver le bon
+            return state.map((post) => {
+                if (post._id === action.payload.postId) {
+                    return {
+                        //on retourne le post
+                        ...post,
+                        //on filtres l'id le tableau des likers pour retirer l'id de la personne
+                        likers: post.likers.filter(
+                            (id) => id !== action.payload.userId
+                        ),
                     };
                 }
                 return post;

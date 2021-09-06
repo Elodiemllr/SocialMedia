@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { likePost } from "../../actions/post.actions.js";
+import { likePost, unlikePost } from "../../actions/post.actions.js";
 import { UidContext } from "../AppContext.js";
 
 const LikeButton = ({ post }) => {
@@ -18,11 +18,16 @@ const LikeButton = ({ post }) => {
         setLiked(true);
     };
 
-    const unlike = () => {};
+    const unlike = () => {
+        dispatch(unlikePost(post._id, uid));
+        setLiked(false);
+    };
 
     useEffect(() => {
         //post.likers regroupent l'id de tout les likers. on voit si l'id de notre users est dans ce tableau
         if (post.likers.includes(uid)) setLiked(true);
+        else setLiked(false);
+
         //on relance notre useEffect après ses trois possibilités
     }, [uid, post.likers, liked]);
     return (
