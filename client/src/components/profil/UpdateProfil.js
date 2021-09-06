@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateBio } from "../../actions/user.actions.js";
 import dateParser from "../../Utils.js";
 import LeftNavBar from "../Routes/LetNavBar.js";
+import FollowHandle from "./FollowHandle.js";
 import UploadImg from "./UploadImg.js";
 
 const UpdateProfil = () => {
@@ -121,7 +122,13 @@ const UpdateProfil = () => {
                                                     alt="user-pic"
                                                 />
                                                 <h4> {user.pseudo} </h4>
-                                                <h1>FOLLOWERS</h1>
+                                                <div className="follow-handler">
+                                                    <FollowHandle
+                                                        idToFollow={user._id}
+                                                    >
+                                                        FOLLOWERS
+                                                    </FollowHandle>
+                                                </div>
                                             </li>
                                         );
                                     }
@@ -158,7 +165,11 @@ const UpdateProfil = () => {
                                                     alt="user-pic"
                                                 />
                                                 <h4> {user.pseudo} </h4>
-                                                <h1>FOLLOWERS</h1>
+                                                <div className="follow-handler">
+                                                    <FollowHandle>
+                                                        FOLLOWERS
+                                                    </FollowHandle>
+                                                </div>
                                             </li>
                                         );
                                     }

@@ -17,3 +17,13 @@ const dateParser = (num) => {
 };
 
 export default dateParser;
+
+//isEmpty pourra être utilisé partout, par exemple pour savoir si notre userData.following est undefined, null ou autre
+export const isEmpty = (value) => {
+    return (
+        value === undefined ||
+        value === null ||
+        (typeof value === "object" && Object.keys(value).length === 0) ||
+        (typeof value === "string" && value.trim().length === 0)
+    );
+};

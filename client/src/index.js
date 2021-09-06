@@ -22,6 +22,7 @@ const store = createStore(
 );
 //lorsqu'on lance l'application on recup tout nos utilisateurs
 store.dispatch(getUsers());
+
 ReactDOM.render(
     <Provider store={store}>
         <App />
