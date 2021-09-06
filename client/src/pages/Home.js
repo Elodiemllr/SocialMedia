@@ -6,9 +6,10 @@ import Thread from "../components/Thread.js";
 const Home = () => {
     return (
         <div className="home">
+            {/* on importe notre leftBar */}
             <LeftNavBar />
             <div className="main">
-                <Thread></Thread>
+                <Thread />
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-//Posts
-export const GET_POSTS = " GET_POSTS";
+//posts
+export const GET_POSTS = "GET_POSTS";
 
 export const getPosts = () => {
     return (dispatch) => {

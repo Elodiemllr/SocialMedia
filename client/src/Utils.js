@@ -1,7 +1,7 @@
 //pour traiter les dates reçus
 const dateParser = (num) => {
     let options = {
-        hours: "2-digit",
+        hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
         weekday: "long",
@@ -9,6 +9,7 @@ const dateParser = (num) => {
         month: "short",
         day: "numeric",
     };
+
     let timestamp = Date.parse(num);
 
     let date = new Date(timestamp).toLocaleDateString("fr-FR", options);
