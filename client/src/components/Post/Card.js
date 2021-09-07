@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import dateParser, { isEmpty } from "../../Utils.js";
 import FollowHandler from "../profil/FollowHandler.js";
 import LikeButton from "./LikeButton.js";
@@ -9,11 +9,26 @@ import LikeButton from "./LikeButton.js";
 const Card = ({ post }) => {
     //tant qu'on a pas la data de notre card, on met un "loading"
     const [isLoading, setIsLoading] = useState(true);
+    //si on click sur le bouton pour faire l'update de notre message dans le feel d'actu
+    const [isUpdated, setIsUpdated] = useState();
+    //le message update
+    const [textUpdate, setTextUpdate] = useState(false);
 
     //on recupère toutes les datas de nos utilisateurs
     const usersData = useSelector((state) => state.usersReducer);
     // et celle de l'utilisateur concerné
     const userData = useSelector((state) => state.userReducer);
+
+    const dispatch = useDispatch();
+    //pour declencher notre action qui modifiera le msg
+    const updateItem = async () => {
+        //si textUpdate contient quelque chose (si il y'a quelque chose qui a changé)
+        if (textUpdate) {
+            await dispatch(updatePost(post._id, textUpdate));
+        }
+        //quand c'est actualisé on repasse sur false pour revenir à l'état normal
+        setIsUpdated(false);
+    };
 
     //on enlève le chargement lorsqu'on a quelque chose a afficher
     useEffect(() => {
@@ -70,7 +85,30 @@ const Card = ({ post }) => {
                             <span>{dateParser(post.createdAt)}</span>
                         </div>
                         {/*Puis on affiche le message et une photo si il y'en a une  */}
-                        <p>{post.message}</p>
+                        {/*si isUpdated est sur fals alors on affiche le message de base */}
+                        {isUpdated === false && <p>{post.message}</p>}
+                        {/*si il est sur true, alors */}
+                        {isUpdated && (
+                            <div className="update-post">
+                                {/*sur le textarea on met une valeur par defaut qui sera notre text de base, et au changement on passe a setTextUpdate la valeur entrée dans notre input  */}
+                                <textarea
+                                    defaultValue={post.message}
+                                    onChange={(e) =>
+                                        setTextUpdate(e.target.value)
+                                    }
+                                />
+                                <div className="button-container">
+                                    {/* au click on fait la function update l'item , qui declenchera toutes notre actions */}
+                                    <button
+                                        className="btn"
+                                        onClick={updateItem}
+                                    >
+                                        Valider les modificaions
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
                         {post.picture && (
                             <img
                                 src={post.picture}
@@ -89,6 +127,17 @@ const Card = ({ post }) => {
                                 allowFullScreen
                                 title={post._id}
                             ></iframe>
+                        )}
+                        {/*Pour modifier son propre post seulement */}
+                        {userData._id === post.posterId && (
+                            <div className="button-container">
+                                <div onClick={() => setIsUpdated(!isUpdated)}>
+                                    <img
+                                        src="./img/icons/edit.svg"
+                                        alt="edit"
+                                    />
+                                </div>
+                            </div>
                         )}
                         <div className="card-footer">
                             {/* icon de commentaire avec le nombre */}

@@ -1,4 +1,9 @@
-import { GET_POSTS, LIKE_POST, UNLIKE_POST } from "../actions/post.actions.js";
+import {
+    GET_POSTS,
+    LIKE_POST,
+    UNLIKE_POST,
+    UPDATE_POST,
+} from "../actions/post.actions.js";
 
 const initialState = {};
 
@@ -32,6 +37,17 @@ export default function postReducer(state = initialState, action) {
                     };
                 }
                 return post;
+            });
+        case UPDATE_POST:
+            //on cherche le post, et on verifie qu'il correspond a l'id
+            //puis on retourne le post avec le message
+            return state.map((post) => {
+                if (post._id === action.payload.postId) {
+                    return {
+                        ...post,
+                        message: action.payload.message,
+                    };
+                } else return post;
             });
         default:
             return state;
