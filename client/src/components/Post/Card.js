@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import dateParser, { isEmpty } from "../../Utils.js";
 import FollowHandler from "../profil/FollowHandler.js";
+import DeleteCard from "./DeleteCard.js";
 import LikeButton from "./LikeButton.js";
 //comp individuel pour un post (mit dans le thread)
 
@@ -137,6 +138,8 @@ const Card = ({ post }) => {
                                         alt="edit"
                                     />
                                 </div>
+                                {/*on donne la possibilité à l'utilisateur de supp son msg*/}
+                                <DeleteCard id={post._id}></DeleteCard>
                             </div>
                         )}
                         <div className="card-footer">
