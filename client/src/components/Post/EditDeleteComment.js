@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { editComment } from "../../actions/post.actions";
+import { deleteComment, editComment } from "../../actions/post.actions";
 import { UidContext } from "../AppContext";
 
 const EditDeleteComment = ({ comment, postId }) => {
@@ -11,7 +11,7 @@ const EditDeleteComment = ({ comment, postId }) => {
     const uid = useContext(UidContext);
     const dispatch = useDispatch();
     //pour supp
-    const handleDelete = () => dispatch();
+    const handleDelete = () => dispatch(deleteComment(postId, comment._id));
 
     //fonction pour edit
     const handleEdit = (e) => {

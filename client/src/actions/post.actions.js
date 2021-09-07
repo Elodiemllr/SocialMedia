@@ -111,7 +111,7 @@ export const editComment = (postId, commentId, text) => {
     return (dispatch) => {
         return axios({
             method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/post/edit-comment-post/${postId}`,
+            url: `${process.env.REACT_APP_API_URL}api/post/edit-comment/${postId}`,
             data: { commentId, text },
         })
             .then((res) => {
@@ -129,7 +129,7 @@ export const deleteComment = (postId, commentId) => {
         return axios({
             //on met à jour le tab à l'interieur du post
             method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/post/delete-comment-post/${postId}`,
+            url: `${process.env.REACT_APP_API_URL}api/post/delete-comment/${postId}`,
             data: { commentId },
         })
             .then((res) => {
