@@ -5,6 +5,7 @@ export const GET_POSTS = "GET_POSTS";
 export const LIKE_POST = "LIKE_POST";
 export const UNLIKE_POST = "UNLIKE_POST";
 export const UPDATE_POST = "UPDATE_POST";
+export const DELETE_POST = "DELETE_POST";
 
 //on passe num en paramètres, pour dans notre const array lui dire d'aller jusqu'au "num" (soit 5) avec la méthode slice
 export const getPosts = (num) => {
@@ -52,7 +53,7 @@ export const unlikePost = (postId, userId) => {
 
 export const updatePost = (postId, message) => {
     return (dispatch) => {
-        //on fait un "pu" pour envoyer le message à notre api suivant l'id de notre user
+        //on fait un "put" pour envoyer le message à notre api suivant l'id de notre user
         return axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/post/${postId}`,
@@ -60,6 +61,25 @@ export const updatePost = (postId, message) => {
         }) //on dispatch le message et l'id de celui qui post
             .then((res) => {
                 dispatch({ type: UPDATE_POST, payload: { message, postId } });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+//elle a besoin du post ID en params pour savoir lequel supprimer
+export const deletePost = (postId) => {
+    return (dispatch) => {
+        //on fait un "delete" pour supprimer le post
+        return axios({
+            //suppression dans la base de données
+            method: "delete",
+            //url du post a supprimé
+            url: `${process.env.REACT_APP_API_URL}api/post/${postId}`,
+            data: { message },
+        }) //on dispatch le message et l'id de celui qui post
+            .then((res) => {
+                //mise à jour dans le store
+                dispatch({ type: DELETE_POST, payload: { postId } });
             })
             .catch((err) => console.log(err));
     };

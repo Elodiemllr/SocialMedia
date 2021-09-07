@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { updatePost } from "../../actions/post.actions.js";
 import dateParser, { isEmpty } from "../../Utils.js";
 import FollowHandler from "../profil/FollowHandler.js";
 import DeleteCard from "./DeleteCard.js";
