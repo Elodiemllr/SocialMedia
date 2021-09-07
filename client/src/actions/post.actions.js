@@ -9,6 +9,7 @@ export const DELETE_POST = "DELETE_POST";
 
 //comments
 export const ADD_COMMENT = "ADD_COMMENT";
+export const EDIT_COMMENT = "EDIT_COMMENT";
 
 //on passe num en paramètres, pour dans notre const array lui dire d'aller jusqu'au "num" (soit 5) avec la méthode slice
 export const getPosts = (num) => {

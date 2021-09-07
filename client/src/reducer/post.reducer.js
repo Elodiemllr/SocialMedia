@@ -1,5 +1,5 @@
 import {
-    DELETE_POST,
+    EDIT_COMMENT,
     GET_POSTS,
     LIKE_POST,
     UNLIKE_POST,
@@ -51,9 +51,28 @@ export default function postReducer(state = initialState, action) {
                 } else return post;
             });
 
-        case DELETE_POST:
-            //on filtre pour lui demander si il trouve notre post supprimé, et si il le trouve pas alors il retourne tous les post sauf celui non trouvé (supprimé)
-            return state.filter((post) => post._id !== action.payload.postId);
+        case EDIT_COMMENT:
+            //on map pour trouver le post
+
+            return state.map((post) => {
+                if (post._id === action.payload.postId) {
+                    return {
+                        ...post,
+                        //on map pour trouver le commentaire de ce post
+                        comments: post.comments.map((comment) => {
+                            //
+                            if (comment._id === action.payload.commentId) {
+                                return {
+                                    ...comment,
+                                    text: action.payload.text,
+                                };
+                            } else {
+                                return comment;
+                            }
+                        }),
+                    };
+                } else return post;
+            });
         default:
             return state;
     }
