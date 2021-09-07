@@ -11,6 +11,7 @@ const postSchema = new mongoose.Schema(
 
         message: {
             type: String,
+            required: true,
             trim: true,
             maxlength: 1000,
         },

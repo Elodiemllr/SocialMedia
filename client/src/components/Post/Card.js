@@ -13,7 +13,7 @@ const Card = ({ post }) => {
     //tant qu'on a pas la data de notre card, on met un "loading"
     const [isLoading, setIsLoading] = useState(true);
     //si on click sur le bouton pour faire l'update de notre message dans le feel d'actu
-    const [isUpdated, setIsUpdated] = useState();
+    const [isUpdated, setIsUpdated] = useState(false);
     //le message update
     const [textUpdate, setTextUpdate] = useState(false);
 
@@ -109,7 +109,7 @@ const Card = ({ post }) => {
                                         className="btn"
                                         onClick={updateItem}
                                     >
-                                        Valider les modificaions
+                                        Valider modification
                                     </button>
                                 </div>
                             </div>
