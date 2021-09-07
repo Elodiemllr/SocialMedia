@@ -52,15 +52,11 @@ export default function postReducer(state = initialState, action) {
             });
 
         case EDIT_COMMENT:
-            //on map pour trouver le post
-
             return state.map((post) => {
                 if (post._id === action.payload.postId) {
                     return {
                         ...post,
-                        //on map pour trouver le commentaire de ce post
                         comments: post.comments.map((comment) => {
-                            //
                             if (comment._id === action.payload.commentId) {
                                 return {
                                     ...comment,
