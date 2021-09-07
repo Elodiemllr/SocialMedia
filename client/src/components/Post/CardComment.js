@@ -77,8 +77,8 @@ const CardComments = ({ post }) => {
                             {/* on porpose à notre user de delete ou d'edit son commentaire*/}
                             <EditDeleteComment
                                 comment={comment}
-                                postId={post_id}
-                            ></EditDeleteComment>
+                                postId={post._id}
+                            />
                         </div>
                     </div>
                 );
