@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isEmpty } from "../../Utils.js";
+import { addComment, getPosts } from "../../actions/post.actions.js";
+import { isEmpty, timestampParser } from "../../Utils.js";
+import FollowHandler from "../profil/FollowHandler.js";
 
 const CardComments = ({ post }) => {
     //pour stocker le commentaire
@@ -11,6 +13,17 @@ const CardComments = ({ post }) => {
     const userData = useSelector((state) => state.userReducer);
 
     const dispatch = useDispatch();
+
+    //pour envoyer mon commentaire
+    const handleComment = (e) => {
+        e.preventDefault();
+
+        if (text) {
+            dispatch(addComment(post._id, userData._id, text, userData.pseudo))
+                .then(() => dispatch(getPosts()))
+                .then(() => setText(""));
+        }
+    };
 
     //on map pour afficher tous les commentaires
     return (
@@ -44,9 +57,46 @@ const CardComments = ({ post }) => {
                                 alt="commenter-pic"
                             ></img>
                         </div>
+                        {/*sur la partie droite on mettra les commentaires, les pseudo , le follow handler etc */}
+                        <div className="right-part">
+                            <div className="comment-header">
+                                <div className="pseudo">
+                                    <h3>{comment.commenterPseudo}</h3>
+                                    {comment.commenterId !== userData._id && (
+                                        <FollowHandler
+                                            idToFollow={comment.commenterId}
+                                            type={"card"}
+                                        />
+                                    )}
+                                </div>
+                                <span>
+                                    {timestampParser(comment.timestamp)}
+                                </span>
+                            </div>
+                            <p>{comment.text} </p>
+                        </div>
                     </div>
                 );
             })}
+            {/*on ne propose de commenter seulement si l'user est connecté*/}
+            {userData._id && (
+                <form
+                    action=""
+                    onSubmit={handleComment}
+                    className="comment-form"
+                >
+                    {/*au changement on se recup l'evenement et on lui passe la valeur dans notre set */}
+                    <input
+                        type="text"
+                        name="text"
+                        onChange={(e) => setText(e.target.value)}
+                        value={text}
+                        placeholder="Laisser un commentaire"
+                    />
+                    <br />
+                    <input type="submit" value="Envoyer" />
+                </form>
+            )}
         </div>
     );
 };

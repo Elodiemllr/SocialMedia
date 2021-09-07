@@ -7,6 +7,9 @@ export const UNLIKE_POST = "UNLIKE_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
 
+//comments
+export const ADD_COMMENT = "ADD_COMMENT";
+
 //on passe num en paramètres, pour dans notre const array lui dire d'aller jusqu'au "num" (soit 5) avec la méthode slice
 export const getPosts = (num) => {
     return (dispatch) => {
@@ -81,5 +84,23 @@ export const deletePost = (postId) => {
                 dispatch({ type: DELETE_POST, payload: { postId } });
             })
             .catch((err) => console.log(err));
+    };
+};
+
+export const addComment = ({ postId, commenterId, text, commenterPseudo }) => {
+    return (dispatch) => {
+        //on patch (ajoute) dans notre bdd le commentaire par rapport au postId (on ajoute l'id du commentateur, le text et son pseudo )
+        return (
+            axios({
+                method: "patch",
+                url: `${process.env.REACT_APP_API_URL}api/post/comment-post/${postId}`,
+                data: { commenterId, text, commenterPseudo },
+            })
+                //on met à jour dans notre store
+                .then((res) => {
+                    dispatch({ type: ADD_COMMENT, payload: { postId } });
+                })
+                .catch((err) => console.log(err))
+        );
     };
 };
