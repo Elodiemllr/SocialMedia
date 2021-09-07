@@ -1,19 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { addPost, getPosts } from "../../actions/post.actions.js";
 import { isEmpty, timestampParser } from "../../Utils.js";
+
 const NewPostForm = () => {
+    const dispatch = useDispatch();
     //pour le chargement de la page
     const [isLoading, setIsLoading] = useState(true);
     const [message, setMessage] = useState("");
+    // ce qu'on va vouloir afficher niveau front
     const [postPicture, setPostPicture] = useState(null);
     const [video, setVideo] = useState("");
+    // ce qu'on va envoyer à la bdd
     const [file, setFile] = useState("");
+
     const userData = useSelector((state) => state.userReducer);
+    const error = useSelector((state) => state.errorReducer.postErrors);
 
-    const handlePicture = () => {};
+    const handlePost = async () => {
+        //on délenche cette action seulement si on a quelque chose à envoyer
+        if (message || postPicture || video) {
+            const data = new FormData();
+            //on ajoute le poster id dans notre data, le message etc
+            data.append("posterId", userData._id);
+            data.append("message", message);
+            if (file) data.append("file", file);
+            data.append("video", video);
 
-    const handlePost = () => {};
+            //on l'envoie à notre back avec l'action addPost
+            await dispatch(addPost(data));
+            //on recupère le nouveaux post
+            dispatch(getPosts());
+            //on remet tout a zéro
+            cancelPost();
+        } else {
+            alert("Veuillez entrer un message");
+        }
+    };
+
+    const handlePicture = (e) => {
+        //on veut une prévisualisation immédiate
+        //on incrémente postPicture et on lui passe l'url de notre photo pour pouvoir l'afficher
+        setPostPicture(URL.createObjectURL(e.target.files[0]));
+        //on l'envoie à notre bdd
+        setFile(e.target.files[0]);
+        //ne pas oublié qu'on ne peut pas avoir de vidéo
+        setFile("");
+    };
 
     const cancelPost = () => {
         //on passe tout sur des string vide / on annule tout
@@ -24,6 +58,7 @@ const NewPostForm = () => {
     };
 
     const handleVideo = () => {
+        // split replace join : methode JS
         //on se split tout notre message partie par partie;
         let findLink = message.split(" ");
         //on test chaque élement splité
@@ -37,6 +72,10 @@ const NewPostForm = () => {
                 let embed = findLink[i].replace("watch?v=", "embed/");
                 //on coupe la partie de notre link après "&" pour ne pas poster une vidéo youtube dejà avancé dans le temps
                 setVideo(embed.split("&")[0]);
+                findLink.splice(i, 1);
+                setMessage(findLink.join(" "));
+                //si on a une photo alors on la supp
+                setPostPicture("");
             }
         }
     };
@@ -160,6 +199,12 @@ const NewPostForm = () => {
                                     </button>
                                 )}
                             </div>
+                            {/*message d'erreur */}
+                            {/*si il y'a une erreur sur le format */}
+                            {!isEmpty(error.format) && <p>{error.format}</p>}
+                            {/*si il y'a une erreur sur la taille */}
+                            {!isEmpty(error.maxSize) && <p>{error.maxSize}</p>}
+
                             <div className="btn-send">
                                 {/*cancel post ne s'affichera que si il y'a quelques chose a effacer*/}
                                 {message || postPicture || video.length > 20 ? (

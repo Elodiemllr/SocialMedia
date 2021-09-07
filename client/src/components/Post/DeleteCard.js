@@ -8,19 +8,20 @@ const DeleteCard = (props) => {
     //function pour supprimer
     //on appelle notre action deletePost avec en params l'id
     const deleteQuote = () => dispatch(deletePost(props.id));
+    return (
+        <div
+            onClick={() => {
+                //au click on lui demande de confirmer son intention de supprimé le post
 
-    <div
-        onClick={() => {
-            //au click on lui demande de confirmer son intention de supprimé le post
-
-            if (window.confirm("Voulez-vous vraiment supprimer ce post?")) {
-                //si la personne click sur ok alors on lance la function "deleteQuote"
-                deleteQuote();
-            }
-        }}
-    >
-        <img src="./img/icons/trash.svg" alt="trash" />
-    </div>;
+                if (window.confirm("Voulez-vous vraiment supprimer ce post?")) {
+                    //si la personne click sur ok alors on lance la function "deleteQuote"
+                    deleteQuote();
+                }
+            }}
+        >
+            <img src="./img/icons/trash.svg" alt="trash" />
+        </div>
+    );
 };
 
 export default DeleteCard;

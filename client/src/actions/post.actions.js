@@ -2,6 +2,7 @@ import axios from "axios";
 
 //posts
 export const GET_POSTS = "GET_POSTS";
+export const ADD_POST = "ADD_POST";
 export const LIKE_POST = "LIKE_POST";
 export const UNLIKE_POST = "UNLIKE_POST";
 export const UPDATE_POST = "UPDATE_POST";
@@ -11,6 +12,8 @@ export const DELETE_POST = "DELETE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const EDIT_COMMENT = "EDIT_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+
+export const GET_POST_ERRORS = "GET_POST_ERRORS";
 
 //on passe num en paramètres, pour dans notre const array lui dire d'aller jusqu'au "num" (soit 5) avec la méthode slice
 export const getPosts = (num) => {
@@ -22,6 +25,26 @@ export const getPosts = (num) => {
                 dispatch({ type: GET_POSTS, payload: array });
             })
             .catch((err) => console.log(err));
+    };
+};
+
+export const addPost = (data) => {
+    return (dispatch) => {
+        return (
+            axios
+                //on envoie les data dans notre back
+                .post(`${process.env.REACT_APP_API_URL}api/post/`, data)
+                .then((res) => {
+                    if (res.data.errors) {
+                        dispatch({
+                            type: GET_POST_ERRORS,
+                            payload: res.data.errors,
+                        });
+                    } else {
+                        dispatch({ type: GET_POST_ERRORS, payload: "" });
+                    }
+                })
+        );
     };
 };
 

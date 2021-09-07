@@ -16,7 +16,7 @@ module.exports.uploadProfilPicture = async (req, res) => {
             throw Error("invalid file");
         //le throw arrête le try pour directement passer au catch
         //ici on exige une taille en dessous de 500ko
-        if (req.file.size > 5000000) throw Error("max size");
+        if (req.file.size > 50000) throw Error("max size");
     } catch (err) {
         const errors = uploadErrors(err);
         return res.status(201).json(errors);
