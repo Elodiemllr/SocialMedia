@@ -75,7 +75,6 @@ export const deletePost = (postId) => {
             method: "delete",
             //url du post a supprimé
             url: `${process.env.REACT_APP_API_URL}api/post/${postId}`,
-            data: { message },
         }) //on dispatch le message et l'id de celui qui post
             .then((res) => {
                 //mise à jour dans le store

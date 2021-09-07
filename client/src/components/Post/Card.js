@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updatePost } from "../../actions/post.actions.js";
 import dateParser, { isEmpty } from "../../Utils.js";
 import FollowHandler from "../profil/FollowHandler.js";
+import CardComments from "./CardComment.js";
 import DeleteCard from "./DeleteCard.js";
 import LikeButton from "./LikeButton.js";
 //comp individuel pour un post (mit dans le thread)
@@ -15,6 +16,9 @@ const Card = ({ post }) => {
     const [isUpdated, setIsUpdated] = useState();
     //le message update
     const [textUpdate, setTextUpdate] = useState(false);
+
+    //pour l'icon du commentaire (afficher ou pas les comm's)
+    const [showComments, setShowComments] = useState(false);
 
     //on recupère toutes les datas de nos utilisateurs
     const usersData = useSelector((state) => state.usersReducer);
@@ -146,7 +150,10 @@ const Card = ({ post }) => {
                         <div className="card-footer">
                             {/* icon de commentaire avec le nombre */}
                             <div className="comment-icon">
-                                <img
+                                <img // au click sur l'icon, on passe showComments sur true
+                                    onClick={() =>
+                                        setShowComments(!showComments)
+                                    }
                                     src="./img/icons/message1.svg"
                                     alt="comment"
                                 />
@@ -156,6 +163,8 @@ const Card = ({ post }) => {
                             <LikeButton post={post} />
                             <img src="./img/icons/share.svg" alt="share" />
                         </div>
+                        {/* si showComments est sur true alors on declenche CardComments*/}
+                        {showComments && <CardComments post={post} />}
                     </div>
                 </>
             )}
