@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addComment, getPosts } from "../../actions/post.actions.js";
 import { isEmpty, timestampParser } from "../../Utils.js";
 import FollowHandler from "../profil/FollowHandler.js";
+import EditDeleteComment from "./EditDeleteComment.js";
 
 const CardComments = ({ post }) => {
     //pour stocker le commentaire
@@ -73,6 +74,11 @@ const CardComments = ({ post }) => {
                                 </span>
                             </div>
                             <p>{comment.text} </p>
+                            {/* on porpose à notre user de delete ou d'edit son commentaire*/}
+                            <EditDeleteComment
+                                comment={comment}
+                                postId={post_id}
+                            ></EditDeleteComment>
                         </div>
                     </div>
                 );
