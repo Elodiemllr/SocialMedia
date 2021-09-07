@@ -87,7 +87,7 @@ export const deletePost = (postId) => {
     };
 };
 
-export const addComment = ({ postId, commenterId, text, commenterPseudo }) => {
+export const addComment = (postId, commenterId, text, commenterPseudo) => {
     return (dispatch) => {
         //on patch (ajoute) dans notre bdd le commentaire par rapport au postId (on ajoute l'id du commentateur, le text et son pseudo )
         return (

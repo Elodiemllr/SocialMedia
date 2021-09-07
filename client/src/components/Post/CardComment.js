@@ -17,7 +17,6 @@ const CardComments = ({ post }) => {
     //pour envoyer mon commentaire
     const handleComment = (e) => {
         e.preventDefault();
-
         if (text) {
             dispatch(addComment(post._id, userData._id, text, userData.pseudo))
                 .then(() => dispatch(getPosts()))
