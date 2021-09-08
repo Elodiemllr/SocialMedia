@@ -47,7 +47,6 @@ export const addPost = (data) => {
         );
     };
 };
-
 //on passe en params l'id de l'user qui a liké et l"id de celui qui reçoit le like
 export const likePost = (postId, userId) => {
     return (dispatch) => {

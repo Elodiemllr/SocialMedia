@@ -10,6 +10,7 @@ const Thread = () => {
     const [loadPost, setLoadPost] = useState(true);
     //pour nos post, pour la scroll
     const [count, setCount] = useState(5);
+
     const dispatch = useDispatch();
     //on recupère les posts de notre store
     const posts = useSelector((state) => state.postReducer);
@@ -39,7 +40,7 @@ const Thread = () => {
             //
             window.removeEventListener("scroll", loadMore);
         };
-    }, [loadPost, dispatch]);
+    }, [loadPost, dispatch, count]);
 
     return (
         <div className="thread-container">

@@ -31,19 +31,19 @@ module.exports.createPost = async (req, res) => {
             if (req.file.size > 500000) throw Error("max size");
         } catch (err) {
             const errors = uploadErrors(err);
-            return res.status(201).json(errors);
+            return res.status(201).json({ errors });
         }
         // ici le fileName l'id de l'user +6 le moment pile ou il l'envoie (du coup nom unique)
         fileName = req.body.posterId + Date.now() + ".jpg";
         //cette function permet de creer via file stysteme le fichier
         await pipeline(
             req.file.stream,
-            fileSystem.createWriteStream(
-                //ici le chemin ou on stock
+            fs.createWriteStream(
                 `${__dirname}/../client/public/uploads/posts/${fileName}`
             )
         );
     }
+
     const newPost = new PostModel({
         posterId: req.body.posterId,
         message: req.body.message,

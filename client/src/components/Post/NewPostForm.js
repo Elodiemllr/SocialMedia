@@ -16,7 +16,7 @@ const NewPostForm = () => {
     const [file, setFile] = useState("");
 
     const userData = useSelector((state) => state.userReducer);
-    const error = useSelector((state) => state.errorReducer.postErrors);
+    const error = useSelector((state) => state.errorReducer.postError);
 
     const handlePost = async () => {
         //on délenche cette action seulement si on a quelque chose à envoyer
@@ -38,7 +38,6 @@ const NewPostForm = () => {
             alert("Veuillez entrer un message");
         }
     };
-
     const handlePicture = (e) => {
         //on veut une prévisualisation immédiate
         //on incrémente postPicture et on lui passe l'url de notre photo pour pouvoir l'afficher
@@ -46,7 +45,7 @@ const NewPostForm = () => {
         //on l'envoie à notre bdd
         setFile(e.target.files[0]);
         //ne pas oublié qu'on ne peut pas avoir de vidéo
-        setFile("");
+        setVideo("");
     };
 
     const cancelPost = () => {
@@ -57,32 +56,32 @@ const NewPostForm = () => {
         setFile("");
     };
 
-    const handleVideo = () => {
-        // split replace join : methode JS
-        //on se split tout notre message partie par partie;
-        let findLink = message.split(" ");
-        //on test chaque élement splité
-        for (let i = 0; i < findLink.length; i++) {
-            //si ça inclus 'https......' ou
-            if (
-                findLink[i].includes("https://www.yout") ||
-                findLink[i].includes("https://yout")
-            ) {
-                // on remplace replace('watch?v=' par  "embed/"
-                let embed = findLink[i].replace("watch?v=", "embed/");
-                //on coupe la partie de notre link après "&" pour ne pas poster une vidéo youtube dejà avancé dans le temps
-                setVideo(embed.split("&")[0]);
-                findLink.splice(i, 1);
-                setMessage(findLink.join(" "));
-                //si on a une photo alors on la supp
-                setPostPicture("");
-            }
-        }
-    };
-
     //on verifie que notre userData ne soit pas vide, si il ne l'est pas alors on passe notre loading sur false
     useEffect(() => {
         if (!isEmpty(userData)) setIsLoading(false);
+        const handleVideo = () => {
+            // split replace join : methode JS
+            //on se split tout notre message partie par partie;
+            let findLink = message.split(" ");
+            //on test chaque élement splité
+            for (let i = 0; i < findLink.length; i++) {
+                //si ça inclus 'https......' ou
+                if (
+                    findLink[i].includes("https://www.yout") ||
+                    findLink[i].includes("https://yout")
+                ) {
+                    // on remplace replace('watch?v=' par  "embed/"
+                    let embed = findLink[i].replace("watch?v=", "embed/");
+                    //on coupe la partie de notre link après "&" pour ne pas poster une vidéo youtube dejà avancé dans le temps
+                    setVideo(embed.split("&")[0]);
+                    findLink.splice(i, 1);
+                    setMessage(findLink.join(" "));
+                    //si on a une photo alors on la supp
+                    setPostPicture("");
+                }
+            }
+        };
+
         handleVideo();
         //on relance notre useEffect dès que la data evolue ou message evolu
     }, [userData, message, video]);
@@ -194,15 +193,13 @@ const NewPostForm = () => {
                                 )}
                                 {video && (
                                     <button onClick={() => setVideo("")}>
-                                        {" "}
-                                        Supprimer Video{" "}
+                                        Supprimer Video
                                     </button>
                                 )}
                             </div>
                             {/*message d'erreur */}
-                            {/*si il y'a une erreur sur le format */}
+                            {/*si il y'a une erreur sur le format/taille */}
                             {!isEmpty(error.format) && <p>{error.format}</p>}
-                            {/*si il y'a une erreur sur la taille */}
                             {!isEmpty(error.maxSize) && <p>{error.maxSize}</p>}
 
                             <div className="btn-send">
