@@ -10,6 +10,7 @@ import logger from "redux-logger";
 //ATTENTION ENLEVER LORS DE LA MISE EN PRODUCTION (thunk et logger aussi)
 import thunk from "redux-thunk";
 import App from "../src/App";
+import { getPosts } from "./actions/post.actions.js";
 import { getUsers } from "./actions/users.actions.js";
 import rootReducer from "./reducer/index.js";
 import "./styles/index.scss";
@@ -20,8 +21,9 @@ const store = createStore(
     rootReducer,
     composeWithDevTools(applyMiddleware(thunk, logger))
 );
-//lorsqu'on lance l'application on recup tout nos utilisateurs
+//lorsqu'on lance l'application on recup tout nos utilisateurs et tous nos posts
 store.dispatch(getUsers());
+store.dispatch(getPosts());
 
 ReactDOM.render(
     <Provider store={store}>

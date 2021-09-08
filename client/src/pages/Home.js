@@ -4,6 +4,7 @@ import LeftNavBar from "../components/LetNavBar.js";
 import Log from "../components/log";
 import NewPostForm from "../components/Post/NewPostForm.js";
 import Thread from "../components/Thread.js";
+import Trends from "../components/Trends.js";
 //ici je renvoie tout ce qu'il concerne l'accueil alors que dans components je fais des comp individuel
 
 const Home = () => {
@@ -25,6 +26,13 @@ const Home = () => {
                     )}
                 </div>
                 <Thread />
+            </div>
+            <div className="right-side">
+                <div className="right-side-container">
+                    <div className="wrapper">
+                        <Trends></Trends>
+                    </div>
+                </div>
             </div>
         </div>
     );
