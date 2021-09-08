@@ -8,6 +8,8 @@ export const UPDATE_BIO = "update_bio";
 export const FOLLOW_USER = "follow_user";
 export const UNFOLLOW_USER = "unfollow_user";
 
+export const GET_USER_ERRORS = "GET_USER_ERRORS";
+
 export const getUser = (uid) => {
     //dispatch = ce qu'on envoie au reducer pour lui dire quoi mettre dans le store
     return (dispatch) => {
@@ -35,20 +37,32 @@ export const uploadPicture = (data, id) => {
                 .post(`${process.env.REACT_APP_API_URL}api/user/upload`, data)
                 //on avertie notre reducer pour qu'il change le store avec nos nouvelles données
                 .then((res) => {
-                    return axios
-                        .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
-                        .then((res) => {
-                            dispatch({
-                                type: UPLOAD_PICTURE,
-                                payload: res.data.picture,
-                            });
+                    //on test si on a une erreur
+                    if (res.data.errors) {
+                        //on dispatch get user errors avec l'erreur
+                        dispatch({
+                            type: GET_USER_ERRORS,
+                            payload: res.data.errors,
                         });
+                    } else {
+                        //on repasse l'erreur a rien si tout fonctionne
+                        dispatch({ type: GET_USER_ERRORS, payload: "" });
+                        return axios
+                            .get(
+                                `${process.env.REACT_APP_API_URL}api/user/${id}`
+                            )
+                            .then((res) => {
+                                dispatch({
+                                    type: UPLOAD_PICTURE,
+                                    payload: res.data.picture,
+                                });
+                            });
+                    }
                 })
                 .catch((err) => console.log(err))
         );
     };
 };
-
 //id pour l'identifier, bio..pour la bio
 export const updateBio = (userId, bio) => {
     return (dispatch) => {
