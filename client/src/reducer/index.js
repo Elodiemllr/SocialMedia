@@ -2,6 +2,7 @@
 
 import { combineReducers } from "redux";
 import allPostsReducer from "./allPosts.reducer.js";
+import config from "./config.reducer.js";
 import errorReducer from "./error.reducer.js";
 import postReducer from "./post.reducer.js";
 import trendingReducer from "./trending.reducer.js";
@@ -15,4 +16,5 @@ export default combineReducers({
     errorReducer,
     allPostsReducer,
     trendingReducer,
+    config,
 });

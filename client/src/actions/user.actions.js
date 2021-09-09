@@ -64,15 +64,16 @@ export const uploadPicture = (data, id) => {
     };
 };
 //id pour l'identifier, bio..pour la bio
+
 export const updateBio = (userId, bio) => {
     return (dispatch) => {
-        return axios
-            .put(`${process.env.REACT_APP_API_URL}api/user/${userId}`, bio)
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { bio },
+        })
             .then((res) => {
-                dispatch({
-                    type: UPDATE_BIO,
-                    payload: bio,
-                });
+                dispatch({ type: UPDATE_BIO, payload: bio });
             })
             .catch((err) => console.log(err));
     };

@@ -25,6 +25,11 @@ const Navbar = () => {
                             <h3> Instravel</h3>
                         </div>
                     </NavLink>
+
+                    <div className="button-mode">
+                        <button>Dark Mode</button>
+                        <button>Light Mode</button>
+                    </div>
                 </div>
                 {/*Si on a notre uid on r'envoie vers profil et on met une certaines classavec le logo pour se deconnecter */}
                 {uid ? (

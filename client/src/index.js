@@ -3,10 +3,9 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 //import reportWebVitals from "./reportWebVitals";
-//ATTENTION ENLEVER LORS DE LA MISE EN PRODUCTION (thunk et logger aussi)
 import { composeWithDevTools } from "redux-devtools-extension";
-//ATTENTION ENLEVER LORS DE LA MISE EN PRODUCTION (thunk et logger aussi)
 import logger from "redux-logger";
+import promiseMiddleware from "redux-promise";
 //ATTENTION ENLEVER LORS DE LA MISE EN PRODUCTION (thunk et logger aussi)
 import thunk from "redux-thunk";
 import App from "../src/App";
@@ -19,7 +18,7 @@ const store = createStore(
     //composeWithDevTools nous permet d'acceder a tout ce qu'il y'a dans le store
     //thunk nous permet de faire des req async avec redux
     rootReducer,
-    composeWithDevTools(applyMiddleware(thunk, logger))
+    composeWithDevTools(applyMiddleware(thunk, logger, promiseMiddleware))
 );
 //lorsqu'on lance l'application on recup tout nos utilisateurs et tous nos posts
 store.dispatch(getUsers());

@@ -28,7 +28,7 @@ module.exports.createPost = async (req, res) => {
                 throw Error("invalid file");
             //le throw arrête le try pour directement passer au catch
             //ici on exige une taille en dessous de 500ko
-            if (req.file.size > 50000) throw Error("max size");
+            if (req.file.size > 500000) throw Error("max size");
         } catch (err) {
             const errors = uploadErrors(err);
             return res.status(201).json({ errors });
@@ -38,7 +38,7 @@ module.exports.createPost = async (req, res) => {
         //cette function permet de creer via file stysteme le fichier
         await pipeline(
             req.file.stream,
-            fs.createWriteStream(
+            fileSystem.createWriteStream(
                 `${__dirname}/../client/public/uploads/posts/${fileName}`
             )
         );
