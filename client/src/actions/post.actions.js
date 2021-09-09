@@ -170,6 +170,12 @@ export const deleteComment = (postId, commentId) => {
 
 export const getTrends = (sortedArray) => {
     return (dispatch) => {
-        dispatch({ type: GET_TRENDS, payload: sortedArray });
+        return axios
+            .get(`${process.env.REACT_APP_API_URL}api/post/`)
+            .then((res) => {
+                dispatch({ type: GET_TRENDS, payload: sortedArray });
+                dispatch({ type: GET_ALL_POSTS, payload: res.data });
+            })
+            .catch((err) => console.log(err));
     };
 };

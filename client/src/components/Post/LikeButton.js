@@ -9,6 +9,8 @@ const LikeButton = ({ post }) => {
     //voir si ça a déjà été liké ou pas
     const [liked, setLiked] = useState(false);
 
+    const [unliked, setUnLiked] = useState(true);
+
     const uid = useContext(UidContext);
 
     const dispatch = useDispatch();
@@ -29,7 +31,7 @@ const LikeButton = ({ post }) => {
         else setLiked(false);
 
         //on relance notre useEffect après ses trois possibilités
-    }, [uid, post.likers, liked]);
+    }, [uid, post.likers, liked, unliked]);
     return (
         <div className="like-container">
             {/*on test si on a bien l'id de notre user (si il est co) */}

@@ -20,8 +20,12 @@ const corsOptions = {
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
 };
-
-app.use(cors(corsOptions));
+app.use(
+    cors({
+        origin: (origin, callback) => callback(null, true),
+        credentials: true,
+    })
+);
 
 //pour traiter la data de la requete qui va transiter et la  mettre au bon format (body-parser maintenant integrer à express)
 app.use(express.json());
