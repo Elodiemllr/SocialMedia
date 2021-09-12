@@ -2,7 +2,7 @@ import React from "react";
 
 export const Toggle = ({ theme, toggleTheme }) => {
     return (
-        <div onClick={toggleTheme}>
+        <div onClick={toggleTheme} className="toggle_mode">
             {theme === "light" ? (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -8,6 +8,15 @@ transition: all .5s linear;
 .post-container {
     background ${({ theme }) => theme.primary};
    
+   .card-right {
+       color ${({ theme }) => theme.text2};
+   }
+}
+ 
+
+.profil-page .update-container > div{
+    background ${({ theme }) => theme.primary};
+   
 }
 
 .trending-container {
@@ -33,7 +42,6 @@ transition: all .5s linear;
 nav {
     box-shadow  ${({ theme }) => theme.shadow};
 
- 
  
 `;
 
