@@ -12,7 +12,7 @@ const Home = () => {
     //on verifie si notre user est connecté
     const uid = useContext(UidContext);
     return (
-        <div className="home">
+        <div className="home ">
             {/* on importe notre leftBar */}
             <LeftNavBar />
             <div className="main">

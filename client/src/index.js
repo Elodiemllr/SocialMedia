@@ -17,6 +17,7 @@ import "./styles/index.scss";
 const store = createStore(
     //composeWithDevTools nous permet d'acceder a tout ce qu'il y'a dans le store
     //thunk nous permet de faire des req async avec redux
+
     rootReducer,
     composeWithDevTools(applyMiddleware(thunk, logger, promiseMiddleware))
 );

@@ -8,6 +8,7 @@ const Navbar = () => {
     //on se recup le uid pour voir si l'user a ses données*
     //on se récupère ce qu'il y'a au plus haut de notre application
     // pour que si il existe on aura un affichage et si non un autre
+
     const uid = useContext(UidContext);
     //useSelector = selectionner data de l'utilisateur
     const userData = useSelector((state) => state.userReducer);
@@ -21,16 +22,13 @@ const Navbar = () => {
                 <div className="logo">
                     <NavLink exact to="/">
                         <div className="logo">
-                            <img src="./img/icon.png" alt="icon" />
-                            <h3> Instravel</h3>
+                            <img src="./img/icon.svg" alt="icon" />
+                            <h3> SpaceShare</h3>
                         </div>
                     </NavLink>
-
-                    <div className="button-mode">
-                        <button>Dark Mode</button>
-                        <button>Light Mode</button>
-                    </div>
                 </div>
+                <br />
+
                 {/*Si on a notre uid on r'envoie vers profil et on met une certaines classavec le logo pour se deconnecter */}
                 {uid ? (
                     <ul>

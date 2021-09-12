@@ -33,7 +33,7 @@ const Trends = () => {
     }, [posts, dispatch]);
     return (
         <div className="trending-container">
-            <h4> Trending</h4>
+            <h4 className="trending"> Trending</h4>
             <NavLink exact to="/trending">
                 <ul>
                     {" "}
@@ -41,7 +41,7 @@ const Trends = () => {
                         //on map pour afficher post par post
                         trendList.map((post) => {
                             return (
-                                <li key={post._id}>
+                                <li className="trending_list" key={post._id}>
                                     <div>
                                         {/* on affiche soit la photo, soit la video soit la photo de profil */}
                                         {post.picture && (

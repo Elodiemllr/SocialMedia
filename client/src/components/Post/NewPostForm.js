@@ -88,6 +88,10 @@ const NewPostForm = () => {
 
     return (
         <div className="post-container">
+            <div>
+                <h1> {userData.pseudo}</h1>
+            </div>
+            <br />
             {/*si "isloading" est sur true alors on affiche l'icon de chargement, fa-pulse permet de la faire tourner */}
             {isLoading ? (
                 <i className="fas fa-spinner fa-pulse"> </i>

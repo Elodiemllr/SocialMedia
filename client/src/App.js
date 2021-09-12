@@ -1,12 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import Routes from "../src/components/Routes";
 import { getUser } from "./actions/user.actions.js";
 import { UidContext } from "./components/AppContext.js";
+import Routes from "./components/Routes/Index";
+import styled, { ThemeProvider } from "styled-components";
+import useDarkMode from "./components/useDarkMode.js";
+import Toggle from "./components/Toggle.js";
+import { GlobalStyles, lightTheme, darkTheme } from "./components/GlobalStyles";
+
+const Container = styled.div`
+    maw-width: 50%;
+`;
 
 //on veut verifier si notre user est connecté grace au token à l'initialisation de notre app
 const App = () => {
+    const [theme, toggleTheme] = useDarkMode();
+    const themeMode = theme === "light" ? lightTheme : darkTheme;
     const [uid, setUid] = useState(null);
     //dispatch nous permet de declencher une action
     const dispatch = useDispatch();
@@ -32,10 +42,16 @@ const App = () => {
         if (uid) dispatch(getUser(uid));
     }, [uid, dispatch]);
     return (
-        // des qu'on appellera UidContext, on aura l'id de notre utilisateur
-        <UidContext.Provider value={uid}>
-            <Routes />
-        </UidContext.Provider>
+        <ThemeProvider theme={themeMode}>
+            {/* des qu'on appellera UidContext, on aura l'id de notre utilisateur */}
+            <Container>
+                <GlobalStyles />
+                <UidContext.Provider value={uid}>
+                    <Toggle theme={theme} toggleTheme={toggleTheme} />
+                    <Routes />
+                </UidContext.Provider>
+            </Container>
+        </ThemeProvider>
     );
 };
 
