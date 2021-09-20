@@ -12,13 +12,6 @@ import Navbar from "../Navbar.js";
 
 // ici je r'envoie mes routes suivant le chemin choisit
 const Index = () => {
-    {
-        /* const [isActive, setIsActive] = useState("false");
-
-    const ToggleClass = () => {
-        setIsActive(!isActive);
-    };*/
-    }
     return (
         <Router>
             {/*  <div className={isActive ? "white" : "dark "}> */}

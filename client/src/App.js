@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import styled, { ThemeProvider } from "styled-components";
 import { getUser } from "./actions/user.actions.js";
 import { UidContext } from "./components/AppContext.js";
+import { darkTheme, GlobalStyles, lightTheme } from "./components/GlobalStyles";
 import Routes from "./components/Routes/Index";
-import styled, { ThemeProvider } from "styled-components";
-import useDarkMode from "./components/useDarkMode.js";
 import Toggle from "./components/Toggle.js";
-import { GlobalStyles, lightTheme, darkTheme } from "./components/GlobalStyles";
+import useDarkMode from "./components/useDarkMode.js";
 
 const Container = styled.div`
     maw-width: 50%;
