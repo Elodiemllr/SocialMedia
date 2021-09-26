@@ -10,6 +10,7 @@ require("./config/db");
 const { checkUser, requireAuth } = require("./middleware/auth.middleware");
 const cors = require("cors");
 const app = express();
+//const path = require("path");
 
 //ici on précise tout ce qu'on autorise
 const corsOptions = {
