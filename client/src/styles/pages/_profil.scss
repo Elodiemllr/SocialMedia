@@ -33,6 +33,7 @@
         .form-container {
             display: grid;
             grid-template-columns: 30% 70%;
+            color: rgb(0, 0, 53);
 
             @media screen and(max-width: 550px) {
                 grid-template-columns: 1fr;
@@ -44,7 +45,6 @@
                     border-radius: 20px;
                     padding: 10px 20px;
                     transition: 0.2s;
-
                     @media screen and(max-width: 550px) {
                         width: 80%;
                         margin: 0 auto;

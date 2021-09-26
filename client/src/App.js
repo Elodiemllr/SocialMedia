@@ -5,7 +5,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { getUser } from "./actions/user.actions.js";
 import { UidContext } from "./components/AppContext.js";
 import { darkTheme, GlobalStyles, lightTheme } from "./components/GlobalStyles";
-import Routes from "./components/Routes/Index";
+import Routes from "./components/Routes/index.js";
 import Toggle from "./components/Toggle.js";
 import useDarkMode from "./components/useDarkMode.js";
 

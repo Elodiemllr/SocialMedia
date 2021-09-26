@@ -38,6 +38,10 @@ transition: all .5s linear;
 
    
 }
+.form-container { 
+            color: rgb(0, 0, 53);
+
+}
 
 nav {
     box-shadow  ${({ theme }) => theme.shadow};

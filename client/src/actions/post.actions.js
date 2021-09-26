@@ -174,7 +174,7 @@ export const getTrends = (sortedArray) => {
             .get(`${process.env.REACT_APP_API_URL}api/post/`)
             .then((res) => {
                 dispatch({ type: GET_TRENDS, payload: sortedArray });
-                dispatch({ type: GET_ALL_POSTS, payload: res.data });
+                //dispatch({ type: GET_ALL_POSTS, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
