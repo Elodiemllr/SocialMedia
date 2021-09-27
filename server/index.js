@@ -14,7 +14,7 @@ const app = express();
 
 //ici on précise tout ce qu'on autorise
 const corsOptions = {
-    origin: process.env.CLIENT_URL,
+    origin: "process.env.CLIENT_URL",
     credentials: true,
     allowedHeaders: ["sessionId", "Content-Type"],
     exposedHeaders: ["sessionId"],
@@ -45,6 +45,7 @@ app.use("/api/post", postRoutes);
 //jwt
 // a chaque requete on verifie notre user , on assure la securité
 app.get("*", checkUser);
+
 // on utilise le middleware que lors de l'authentification
 app.get("/jwtid", requireAuth, (req, res) => {
     res.status(200).send(res.locals.user._id);
