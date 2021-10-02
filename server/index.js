@@ -14,19 +14,15 @@ const app = express();
 
 //ici on précise tout ce qu'on autorise
 const corsOptions = {
-    origin: "process.env.CLIENT_URL",
+    origin: process.env.CLIENT_URL,
     credentials: true,
     allowedHeaders: ["sessionId", "Content-Type"],
     exposedHeaders: ["sessionId"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
 };
-app.use(
-    cors({
-        origin: (origin, callback) => callback(null, true),
-        credentials: true,
-    })
-);
+
+app.use(cors(corsOptions));
 
 //pour traiter la data de la requete qui va transiter et la  mettre au bon format (body-parser maintenant integrer à express)
 app.use(express.json());
